@@ -10,4 +10,6 @@ app.get('/', (req, res) => {
 	res.send({ hi: 'there' });
 });
 
-app.listen(5000);
+// dynamic port binding - Heroku will inject PORT into env variable.
+const PORT = process.env.PORT || 5000;
+app.listen(PORT);
