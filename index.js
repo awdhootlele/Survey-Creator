@@ -7,7 +7,7 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req, res) => {
-	res.send({ hi: 'there' });
+  res.send({ hello: 'User!!' });
 });
 
 // dynamic port binding - Heroku will inject PORT into env variable.
