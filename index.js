@@ -3,12 +3,12 @@
 
 // common JS imports
 const express = require('express');
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send({ hello: 'User!!' });
-});
+passport.use(new GoogleStrategy());
 
 // dynamic port binding - Heroku will inject PORT into env variable.
 const PORT = process.env.PORT || 5000;
