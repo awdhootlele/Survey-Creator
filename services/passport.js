@@ -28,7 +28,8 @@ passport.use(
     {
       clientID: keys.GOOGLE_CLIENT_ID,
       clientSecret: keys.GOOGLE_CLIENT_SECRET,
-      callbackURL: '/auth/google/callback' // route user will be sent to AFTER permission is granted by user to access google profile
+      callbackURL: '/auth/google/callback', // route user will be sent to AFTER permission is granted by user to access google profile
+      proxy: true // needed, to allow all the URLs from inside heroku network (heroku proxy) or any other proxy
     },
     (accessToken, refreshToken, profile, done) => {
       User.findOne({ googleId: profile.id }).then(existingUser => {
