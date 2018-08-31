@@ -12,16 +12,14 @@ passport.serializeUser((user, done) => {
 
 // takes in id and finds User associated with that ID (opposite to serialize)
 passport.deserializeUser((id, done) => {
-  console.log('id -> ', id);
-  User.findById(id).then((user) => {
-    if(user) {
+  User.findById(id).then(user => {
+    if (user) {
       // user found to that associated ID, req.user points to this user
       done(null, user);
     } else {
-      // user with that ID not found, probably new user?  
+      // user with that ID not found, probably new user?
     }
-  })
-
+  });
 });
 
 //register 'google' strategy

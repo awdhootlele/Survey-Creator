@@ -11,6 +11,8 @@ require('./models/user'); // import file for execution
 require('./services/passport'); // importing passport related code
 mongoose.connect(keys.MONGO_URI);
 const app = express();
+
+// set tup middlewares
 app.use(
     cookieSession({
         maxAge: 30 * 24 * 60 * 60 * 1000, // lasts for 30 days
@@ -18,8 +20,10 @@ app.use(
     })
 );
 
-app.use(passport.initialize()); // ???
-app.use(passport.session()); // ???
+app.use(passport.initialize()); // initialize passport authentication middleware
+app.use(passport.session()); // used to serialize / deserialize the sessionId (Cookie)
+
+// include routes
 require('./routes/authRoutes')(app);
 
 
