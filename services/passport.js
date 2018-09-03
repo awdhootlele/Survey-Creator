@@ -31,20 +31,17 @@ passport.use(
       callbackURL: '/auth/google/callback', // route user will be sent to AFTER permission is granted by user to access google profile
       proxy: true // needed, to allow all the URLs from inside heroku network (heroku proxy) or any other proxy
     },
-    (accessToken, refreshToken, profile, done) => {
-      User.findOne({ googleId: profile.id }).then(existingUser => {
-        if (!existingUser) {
-          // creating and saving new User record
-          new User({
-            googleId: profile.id
-          })
-            .save()
-            .then(newUser => done(null, newUser));
-        } else {
-          // user already exists in database
-          done(null, existingUser); // done(errors, existingRecord)
-        }
-      });
+    async (accessToken, refreshToken, profile, done) => {
+      const existingUser = await User.findOne({ googleId: profile.id });
+      if (existingUser) {
+        // user already exists in database
+        return done(null, existingUser); // done(errors, existingRecord)
+      }
+      // creating and saving new User record
+      const newUser = await new User({
+        googleId: profile.id
+      }).save();
+      done(null, newUser);
     }
   )
 );
