@@ -31,6 +31,18 @@ require('./routes/authRoutes')(app);
 // include billing routes
 require('./routes/billingRoutes')(app);
 
+// config for prod environment (to serve static prod assets)
+if (process.env.NODE_ENV === 'production') {
+  // order is important - FIRST serve static assets THEN handle unmatched route case
+  // serve satic asset (js/css)
+  app.use(express.static('client/build'));
+  // serve index.html (if non  recognized route is encountered)
+  const path = require('path');
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+
 // dynamic port binding - Heroku will inject PORT into env variable.
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
