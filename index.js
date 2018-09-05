@@ -8,7 +8,8 @@ const keys = require('./config/keys');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-require('./models/user'); // import file for execution
+require('./models/User'); // import file for execution
+require('./models/Survey');
 require('./services/passport'); // importing passport related code
 mongoose.connect(keys.MONGO_URI);
 const app = express();
