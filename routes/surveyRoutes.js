@@ -2,6 +2,8 @@
 const requireLogin = require('../middlewares/requireLogin');
 const requireCredits = require('../middlewares/requireCredits');
 const mongoose = require('mongoose');
+const Mailer = require('../services/Mailer');
+const surveyTemplate = require('../services/emailTemplates/surveyTemplate');
 const Survey = mongoose.model('surveys'); // instead of requiring the model directly (As it is already included inside index.js, we refer that model here)
 module.exports = app => {
   app.post('/api/surveys', requireLogin, requireCredits, (req, res) => {
@@ -15,5 +17,10 @@ module.exports = app => {
       _user: req.user.id,
       dateSent: Date.now()
     });
+
+    //send email
+
+    const mailer = new Mailer(survey, surveyTemplate(survey));
+    mailer.send();
   });
 };
