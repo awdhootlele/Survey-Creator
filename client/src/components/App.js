@@ -5,13 +5,10 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Header from './Header';
 import Landing from './Landing';
+import Dashboard from '../components/Dashboard';
 
 import { connect } from 'react-redux'; // to give thic component ability to call action and (or) get state data
 import * as actions from '../actions';
-
-const Dashboard = () => {
-  return <h2>Dashboard</h2>;
-};
 
 const SurverNew = () => {
   return <h2>SurveyNew</h2>;
