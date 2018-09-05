@@ -31,6 +31,8 @@ app.use(passport.session()); // used to serialize / deserialize the sessionId (C
 require('./routes/authRoutes')(app);
 // include billing routes
 require('./routes/billingRoutes')(app);
+// include survey routes
+require('./routes/surveyRoutes')(app);
 
 // config for prod environment (to serve static prod assets)
 if (process.env.NODE_ENV === 'production') {
