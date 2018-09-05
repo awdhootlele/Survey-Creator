@@ -6,7 +6,7 @@ const Mailer = require('../services/Mailer');
 const surveyTemplate = require('../services/emailTemplates/surveyTemplate');
 const Survey = mongoose.model('surveys'); // instead of requiring the model directly (As it is already included inside index.js, we refer that model here)
 module.exports = app => {
-  app.post('/api/surveys', requireLogin, requireCredits, (req, res) => {
+  app.post('/api/surveys', requireLogin, requireCredits, async (req, res) => {
     const { title, subject, body, recipients } = req.body;
     // create new instance (document) of Survey
     const survey = new Survey({
@@ -19,8 +19,18 @@ module.exports = app => {
     });
 
     //send email
-
     const mailer = new Mailer(survey, surveyTemplate(survey));
-    mailer.send();
+    try {
+      await mailer.send();
+      // save survey only after emails are sent successfully
+      await survey.save();
+      // update user credits
+      req.user.credits -= 1;
+      const user = await req.user.save();
+      res.send(user);
+    } catch (err) {
+      // 422 -> unprocessable entity
+      res.status(422).send(err);
+    }
   });
 };
