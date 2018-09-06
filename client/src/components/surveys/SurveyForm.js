@@ -51,7 +51,7 @@ class SurveyForm extends Component {
 
 const validate = values => {
   const errors = {}; // empty object means valid form
-  errors.emails = vaidateEmails(values.emails || '');
+  errors.recipients = vaidateEmails(values.recipients || '');
   _.each(FIELDS, field => {
     const { name } = field;
     if (!values[name]) {
