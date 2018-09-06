@@ -20,3 +20,13 @@ export const handleToken = token => async dispatch => {
     payLoad: res.data
   });
 };
+
+//action creator that submits a finalized, rreviewed survey to back end
+
+export const submitSurvey = values => {
+  console.log('action creator called -> ', values);
+
+  return {
+    type: 'SUBMIT_SURVEY'
+  };
+};
