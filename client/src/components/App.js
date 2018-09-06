@@ -6,13 +6,10 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Header from './Header';
 import Landing from './Landing';
 import Dashboard from '../components/Dashboard';
+import SurveyNew from '../components/surveys/SurveyNew';
 
 import { connect } from 'react-redux'; // to give thic component ability to call action and (or) get state data
 import * as actions from '../actions';
-
-const SurverNew = () => {
-  return <h2>SurveyNew</h2>;
-};
 
 class App extends Component {
   componentDidMount() {
@@ -27,7 +24,7 @@ class App extends Component {
             <Header />
             <Route exact path="/" component={Landing} />
             <Route exact path="/surveys" component={Dashboard} />
-            <Route path="/surveys/new" component={SurverNew} />
+            <Route path="/surveys/new" component={SurveyNew} />
           </div>
         </BrowserRouter>
       </div>
