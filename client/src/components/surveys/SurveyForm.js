@@ -6,13 +6,8 @@ import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import SurveyField from './SurveyField';
 import vaidateEmails from '../../utils/validateEmails';
+import FIELDS from './formFields';
 
-const FIELDS = [
-  { label: 'Survey Title', name: 'title' },
-  { label: 'Subject Line', name: 'subject' },
-  { label: 'Email Body', name: 'body' },
-  { label: 'Recipient List', name: 'emails' }
-];
 class SurveyForm extends Component {
   renderFields() {
     return _.map(FIELDS, field => {
@@ -31,7 +26,11 @@ class SurveyForm extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.props.handleSubmit(values => console.log(values))}>
+        <form
+          onSubmit={this.props.handleSubmit(values =>
+            this.props.onSurveySubmit()
+          )}
+        >
           {this.renderFields()}
           <button
             className="teal btn-flat right white-text"
@@ -51,7 +50,6 @@ class SurveyForm extends Component {
 }
 
 const validate = values => {
-  console.log('validating form ->', values);
   const errors = {}; // empty object means valid form
   errors.emails = vaidateEmails(values.emails || '');
   _.each(FIELDS, field => {
@@ -64,5 +62,6 @@ const validate = values => {
 };
 export default reduxForm({
   validate,
-  form: 'surveyForm'
+  form: 'surveyForm',
+  destroyOnUnmount: false // dont kill form when its unmounted from DOM
 })(SurveyForm);
