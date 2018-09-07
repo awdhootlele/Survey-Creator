@@ -12,7 +12,9 @@ const surveyTemplate = require('../services/emailTemplates/surveyTemplate');
 const Survey = mongoose.model('surveys'); // instead of requiring the model directly (As it is already included inside index.js, we refer that model here)
 module.exports = app => {
   app.get('/api/surveys/:surveyId/:choice', (req, res) => {
-    res.send(`<h3 style="text-align: center">Thanks for the response!!!</h3>`);
+    res.send(
+      `<h3 style="text-align: center; margin-top: 200px">Thanks for the response!!!</h3>`
+    );
   });
   app.post('/api/surveys', requireLogin, requireCredits, async (req, res) => {
     const { title, subject, body, recipients } = req.body;
