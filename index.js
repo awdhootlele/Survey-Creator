@@ -43,7 +43,6 @@ if (process.env.NODE_ENV === 'production') {
   // serve index.html (if non  recognized route is encountered)
   const path = require('path');
   app.get('*', (req, res) => {
-    console.log('surving file ------------');
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }

@@ -49,6 +49,7 @@ module.exports = app => {
     try {
       _.chain(req.body)
         .map(event => {
+          console.log('event -> ', event);
           const { email, url } = event;
 
           const match = new Path('/api/surveys/:surveyId/:choice').test(
