@@ -38,7 +38,12 @@ class Header extends Component {
             to={this.props.auth ? '/surveys' : '/'}
             className="left brand-logo"
           >
-            Emaily
+            <i
+              className="large material-icons"
+              style={{ fontSize: '44px', marginLeft: '5px' }}
+            >
+              account_balance
+            </i>
           </Link>
           <ul id="nav-mobile" className="right">
             {this.renderContent()}
