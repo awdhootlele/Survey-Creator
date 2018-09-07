@@ -1,6 +1,6 @@
 // action creators - piece of code that will generate actual action with will be dispatched to reducer
 import axios from 'axios';
-import { FETCH_USER, SUBMIT_SURVEY } from './types';
+import { FETCH_USER, FETCH_SURVEYS } from './types';
 
 // if we return a function from action creator,
 //  redux-thunk will automatically call that function and pass in 'dispatch' function as an argument to that called function
@@ -28,6 +28,14 @@ export const submitSurvey = (values, history) => async dispatch => {
   history.push('/surveys');
   dispatch({
     type: FETCH_USER, // api returns user with updated credit points, hence update the user part of store
+    payLoad: res.data
+  });
+};
+
+export const fetchSurveys = () => async dispatch => {
+  const res = await axios.get('/api/surveys');
+  dispatch({
+    type: FETCH_SURVEYS,
     payLoad: res.data
   });
 };
