@@ -45,18 +45,21 @@ module.exports = app => {
   app.post('/api/surveys/webhooks', (req, res) => {
     // preprocessing on webhook data ->
     //  remove data which does not meet 1. url path of /api/surveys/ 2. has duplicate surveyID and email at same time
-    const events = _.map(req.body, event => {
-      const { email, url } = event;
-      const match = new Path('/api/surveys/:surveyId/:choice').test(
-        new URL(url).pathame
-      ); // returns an object with {surveyId, choice} if match found else returns null
-      // dont destructure from match oj, coz it could be null
-      if (match) {
-        return { email, surveyId: match.surveyId, choice: match.choice };
-      }
-      // else returns undefined automatically
-    });
-    const compactedEvents = _.compact(events); // removes all undefined events
-    const uniqueEvents = _.uniqBy(compactedEvents, 'email', 'surveyId'); // removes duplicate data, lookup by email and surveyId props at same time
+    const events = _.chain(req.body)
+      .map(event => {
+        const { email, url } = event;
+        const match = new Path('/api/surveys/:surveyId/:choice').test(
+          new URL(url).pathame
+        ); // returns an object with {surveyId, choice} if match found else returns null
+        // dont destructure from match oj, coz it could be null
+        if (match) {
+          return { email, surveyId: match.surveyId, choice: match.choice };
+        }
+        // else returns undefined automatically
+      })
+      .compact() // removes all undefined events
+      .uniqBy('email', 'surveyId') // removes duplicate data, lookup by email and surveyId props at same time
+      .value();
+    res.send({});
   });
 };
