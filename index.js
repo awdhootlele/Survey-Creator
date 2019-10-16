@@ -4,27 +4,29 @@
 // common JS imports
 const cookieSession = require('cookie-session'); // this lib manages cookies
 const passport = require('passport'); // we are going to manage cookies using passportJS
-const keys = require('./config/keys');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const keys = require('./config/keys');
+
+// mongoose models imports
 require('./models/User'); // import file for execution
 require('./models/Survey');
-require('./services/passport'); // importing passport related code
+// importing passport related code
+require('./services/passport');
 
 mongoose.connect(keys.MONGO_URI);
+
+// setup app and middlewares
 const app = express();
-
 app.use(bodyParser.json()); // use body parser middleware
-
-// set tup middlewares
+// cookie session middleware
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000, // lasts for 30 days
     keys: [keys.COOKIE_KEY] // used to encrypt the cookie
   })
 );
-
 app.use(passport.initialize()); // initialize passport authentication middleware
 app.use(passport.session()); // used to serialize / deserialize the sessionId (Cookie)
 
