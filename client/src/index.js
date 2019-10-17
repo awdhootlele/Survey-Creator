@@ -9,11 +9,13 @@ import { createStore, applyMiddleware } from 'redux';
 import reducers from './reducers';
 import App from './components/App';
 
+import logger from 'redux-logger'
+
 // root store object which takes in
 // 1. list of reducers -> functions that update the store,
 //  2. initial state,
 //  3. middlewares (applied inside applyMiddleware call)
-const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
+const store = createStore(reducers, {}, applyMiddleware(reduxThunk, logger));
 
 ReactDOM.render(
   <Provider store={store}>
