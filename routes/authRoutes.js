@@ -1,7 +1,7 @@
 const passport = require('passport');
 
 module.exports = app => {
-  // invoke 'google' strategy when route is hit
+  // invoke 'google' strategy when route is hit, uses create react app proxy
   app.get(
     '/auth/google',
     passport.authenticate('google', {
@@ -15,7 +15,7 @@ module.exports = app => {
     passport.authenticate('google'),
     (req, res) => {
       // redirect to api which can be only called after successful authentication/login
-      res.redirect('/surveys');
+      res.redirect('/surveys'); // this is client side route
     }
   );
 

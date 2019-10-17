@@ -102,5 +102,8 @@ You can refer [to the React documentation](https://reactjs.org/docs/react-dom.ht
 
 # Subsequent Deployment steps - 
 
-1. Commit Codebase with Git
-1. Deploy App With Git
+1. git add .
+2. git commit -am "make it better"
+3. git push heroku master
+
+We can also setup github integration for automatic deploys. More on this here - https://devcenter.heroku.com/articles/github-integration
